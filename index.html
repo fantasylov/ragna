@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <meta name="description" content="신과 인간, 괴물과 운명이 기록된 세계관 아카이브">
+
   <title>World Archive</title>
 
   <style>
-    /* =========================
+
+    /* =========================================================
        기본 설정
-    ========================= */
+    ========================================================= */
 
     * {
       margin: 0;
@@ -18,66 +22,82 @@
     }
 
     :root {
-      --bg: #0c0e13;
-      --bg-soft: #12151d;
-      --card: #171a23;
-      --card-hover: #1d212c;
+      --bg-main: #090b10;
+      --bg-soft: #10131a;
+      --bg-card: #151922;
+      --bg-card-hover: #1c212c;
 
-      --text: #eee9df;
-      --text-soft: #aaa6a0;
+      --text-main: #f0ece3;
+      --text-soft: #aaa79f;
+      --text-dark: #111;
 
       --gold: #c8a96b;
-      --gold-light: #ead6a2;
+      --gold-light: #ead8a8;
+      --gold-dark: #8e7345;
 
       --border: rgba(200, 169, 107, 0.22);
+      --border-strong: rgba(200, 169, 107, 0.5);
 
       --radius: 12px;
     }
+
 
     html {
       scroll-behavior: smooth;
     }
 
+
     body {
       font-family:
         "Pretendard",
         "Noto Sans KR",
+        "Apple SD Gothic Neo",
         Arial,
         sans-serif;
 
       background:
         radial-gradient(
           circle at top,
-          #181b25 0%,
-          #0c0e13 45%,
+          #191d28 0%,
+          #0c0e14 38%,
           #08090d 100%
         );
 
-      color: var(--text);
+      color: var(--text-main);
+
       min-height: 100vh;
-      line-height: 1.6;
+
+      line-height: 1.7;
     }
 
 
-    /* =========================
+    body.modal-open {
+      overflow: hidden;
+    }
+
+
+    /* =========================================================
        헤더
-    ========================= */
+    ========================================================= */
 
     header {
-      min-height: 420px;
+      position: relative;
+
+      min-height: 480px;
 
       display: flex;
       justify-content: center;
       align-items: center;
 
+      padding: 50px 20px;
+
       text-align: center;
 
-      position: relative;
-
-      padding: 40px 20px;
+      overflow: hidden;
 
       border-bottom: 1px solid var(--border);
     }
+
 
     header::before {
       content: "";
@@ -86,320 +106,221 @@
       inset: 0;
 
       background:
+        radial-gradient(
+          circle at 50% 20%,
+          rgba(200, 169, 107, 0.14),
+          transparent 35%
+        ),
         linear-gradient(
-          rgba(5, 6, 10, 0.2),
-          rgba(5, 6, 10, 0.9)
+          to bottom,
+          rgba(8, 9, 14, 0.15),
+          rgba(8, 9, 14, 0.94)
         );
 
       pointer-events: none;
     }
 
+
+    header::after {
+      content: "ᛟ";
+
+      position: absolute;
+
+      font-family: Georgia, serif;
+
+      font-size: 420px;
+
+      color: rgba(200, 169, 107, 0.025);
+
+      pointer-events: none;
+    }
+
+
     .hero {
       position: relative;
-      z-index: 1;
+      z-index: 2;
 
-      max-width: 850px;
+      max-width: 900px;
     }
+
 
     .hero-small {
       color: var(--gold);
 
-      letter-spacing: 5px;
+      font-size: 11px;
+
+      letter-spacing: 6px;
+
       text-transform: uppercase;
 
-      font-size: 12px;
-
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
+
 
     .hero h1 {
-      font-family: Georgia, serif;
+      font-family: Georgia, "Times New Roman", serif;
 
-      font-size: clamp(42px, 8vw, 80px);
+      font-size: clamp(45px, 8vw, 84px);
+
       font-weight: 400;
 
-      letter-spacing: 3px;
+      letter-spacing: 5px;
 
-      margin-bottom: 15px;
+      line-height: 1.15;
     }
+
 
     .hero-line {
-      width: 80px;
+      width: 85px;
       height: 1px;
 
-      background: var(--gold);
+      margin: 27px auto;
 
-      margin: 22px auto;
+      background: var(--gold);
     }
+
 
     .hero p {
       color: var(--text-soft);
 
       font-size: 15px;
+
       letter-spacing: 1px;
     }
 
 
-    /* =========================
+    /* =========================================================
        네비게이션
-    ========================= */
+    ========================================================= */
 
     nav {
       position: sticky;
+
       top: 0;
 
       z-index: 100;
 
-      background: rgba(10, 12, 17, 0.92);
+      background: rgba(9, 11, 16, 0.9);
 
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(15px);
 
       border-bottom: 1px solid var(--border);
     }
 
+
     .nav-inner {
-      max-width: 1200px;
+      max-width: 1250px;
 
       margin: auto;
+
+      padding: 16px 25px;
 
       display: flex;
       justify-content: space-between;
       align-items: center;
-
-      padding: 16px 24px;
     }
+
 
     .logo {
       font-family: Georgia, serif;
 
       color: var(--gold-light);
 
-      letter-spacing: 2px;
+      letter-spacing: 3px;
 
-      font-size: 18px;
+      font-size: 17px;
     }
+
 
     .nav-links {
       display: flex;
+
       gap: 28px;
     }
+
 
     .nav-links a {
       color: var(--text-soft);
 
       text-decoration: none;
 
-      font-size: 14px;
+      font-size: 13px;
 
-      transition: 0.2s;
+      transition: color 0.2s;
     }
+
 
     .nav-links a:hover {
       color: var(--gold-light);
     }
 
 
-    /* =========================
+    /* =========================================================
        메인
-    ========================= */
+    ========================================================= */
 
     main {
-      max-width: 1200px;
+      width: min(1250px, calc(100% - 40px));
 
       margin: auto;
 
-      padding: 70px 24px;
+      padding: 80px 0;
     }
+
 
     section {
-      margin-bottom: 100px;
+      margin-bottom: 120px;
     }
 
+
     .section-header {
-      margin-bottom: 35px;
+      margin-bottom: 38px;
     }
+
 
     .section-label {
       color: var(--gold);
 
+      font-size: 10px;
+
+      letter-spacing: 5px;
+
       text-transform: uppercase;
-
-      letter-spacing: 4px;
-
-      font-size: 11px;
 
       margin-bottom: 8px;
     }
 
+
     .section-title {
       font-family: Georgia, serif;
 
-      font-size: 32px;
+      font-size: clamp(30px, 5vw, 40px);
 
       font-weight: 400;
     }
 
+
     .section-description {
+      color: var(--text-soft);
+
       margin-top: 10px;
 
-      color: var(--text-soft);
-
       font-size: 14px;
+
+      max-width: 650px;
     }
 
 
-    /* =========================
-       검색창
-    ========================= */
+    /* =========================================================
+       세계관 소개
+    ========================================================= */
 
-    .search-area {
-      display: flex;
-
-      gap: 12px;
-
-      flex-wrap: wrap;
-
-      margin-bottom: 35px;
-    }
-
-    #searchInput {
-      flex: 1;
-
-      min-width: 220px;
-
-      padding: 13px 16px;
-
-      border-radius: 8px;
-
-      border: 1px solid var(--border);
-
-      background: var(--bg-soft);
-
-      color: white;
-
-      outline: none;
-    }
-
-    #searchInput:focus {
-      border-color: var(--gold);
-    }
-
-    .filter-btn {
-      background: var(--bg-soft);
-
-      color: var(--text-soft);
-
-      border: 1px solid var(--border);
-
-      padding: 10px 17px;
-
-      border-radius: 8px;
-
-      cursor: pointer;
-
-      transition: 0.2s;
-    }
-
-    .filter-btn:hover,
-    .filter-btn.active {
-      background: var(--gold);
-      color: #111;
-    }
-
-
-    /* =========================
-       카드
-    ========================= */
-
-    .card-grid {
-      display: grid;
-
-      grid-template-columns:
-        repeat(auto-fill, minmax(240px, 1fr));
-
-      gap: 22px;
-    }
-
-    .card {
-      background: var(--card);
-
-      border: 1px solid var(--border);
-
-      border-radius: var(--radius);
+    .world-intro {
+      position: relative;
 
       overflow: hidden;
 
-      cursor: pointer;
-
-      transition:
-        transform 0.25s,
-        background 0.25s,
-        border-color 0.25s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-
-      background: var(--card-hover);
-
-      border-color: rgba(200, 169, 107, 0.55);
-    }
-
-    .card-image {
-      width: 100%;
-      height: 310px;
-
-      object-fit: cover;
-
-      background: #222;
-    }
-
-    .card-content {
-      padding: 19px;
-    }
-
-    .card-category {
-      color: var(--gold);
-
-      font-size: 10px;
-
-      letter-spacing: 2px;
-
-      text-transform: uppercase;
-
-      margin-bottom: 5px;
-    }
-
-    .card-title {
-      font-family: Georgia, serif;
-
-      font-size: 21px;
-
-      margin-bottom: 6px;
-    }
-
-    .card-subtitle {
-      color: var(--text-soft);
-
-      font-size: 13px;
-    }
-
-
-    /* =========================
-       지역 카드
-    ========================= */
-
-    .location-card .card-image {
-      height: 200px;
-    }
-
-
-    /* =========================
-       세계관 소개
-    ========================= */
-
-    .world-box {
-      padding: 35px;
+      padding: 42px;
 
       border: 1px solid var(--border);
 
@@ -408,153 +329,527 @@
       background:
         linear-gradient(
           135deg,
-          rgba(200, 169, 107, 0.05),
+          rgba(200, 169, 107, 0.08),
           rgba(255, 255, 255, 0.01)
         );
     }
 
-    .world-box h3 {
+
+    .world-intro::after {
+      content: "YGGDRASIL";
+
+      position: absolute;
+
+      right: -5px;
+      bottom: -25px;
+
       font-family: Georgia, serif;
 
-      font-size: 28px;
+      font-size: clamp(45px, 8vw, 95px);
 
-      margin-bottom: 15px;
+      color: rgba(255, 255, 255, 0.018);
+
+      letter-spacing: 4px;
+
+      pointer-events: none;
     }
 
-    .world-box p {
+
+    .world-intro h3 {
+      position: relative;
+      z-index: 2;
+
+      font-family: Georgia, serif;
+
+      font-size: 30px;
+
+      font-weight: 400;
+
+      margin-bottom: 18px;
+    }
+
+
+    .world-intro p {
+      position: relative;
+      z-index: 2;
+
+      color: #c0bcb4;
+
+      max-width: 850px;
+    }
+
+
+    /* =========================================================
+       검색 / 필터
+    ========================================================= */
+
+    .controls {
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 17px;
+
+      margin-bottom: 35px;
+    }
+
+
+    .search-box {
+      width: 100%;
+    }
+
+
+    #characterSearch {
+      width: 100%;
+
+      padding: 14px 17px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 8px;
+
+      background: var(--bg-soft);
+
+      color: white;
+
+      outline: none;
+
+      font-size: 14px;
+    }
+
+
+    #characterSearch::placeholder {
+      color: #696b72;
+    }
+
+
+    #characterSearch:focus {
+      border-color: var(--gold-dark);
+    }
+
+
+    .filters {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 8px;
+    }
+
+
+    .filter-btn {
+      padding: 9px 15px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 7px;
+
+      background: var(--bg-soft);
+
       color: var(--text-soft);
+
+      cursor: pointer;
+
+      font-size: 12px;
+
+      transition: all 0.2s;
     }
 
 
-    /* =========================
-       상세 모달
-    ========================= */
+    .filter-btn:hover {
+      color: var(--gold-light);
+
+      border-color: var(--border-strong);
+    }
+
+
+    .filter-btn.active {
+      background: var(--gold);
+
+      color: var(--text-dark);
+
+      border-color: var(--gold);
+    }
+
+
+    /* =========================================================
+       카드
+    ========================================================= */
+
+    .card-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(auto-fill, minmax(245px, 1fr));
+
+      gap: 22px;
+    }
+
+
+    .card {
+      position: relative;
+
+      overflow: hidden;
+
+      border: 1px solid var(--border);
+
+      border-radius: var(--radius);
+
+      background: var(--bg-card);
+
+      cursor: pointer;
+
+      transition:
+        transform 0.25s,
+        border-color 0.25s,
+        background 0.25s;
+    }
+
+
+    .card:hover {
+      transform: translateY(-5px);
+
+      background: var(--bg-card-hover);
+
+      border-color: var(--border-strong);
+    }
+
+
+    .image-area {
+      position: relative;
+
+      width: 100%;
+
+      height: 320px;
+
+      overflow: hidden;
+
+      background:
+        radial-gradient(
+          circle,
+          #232936,
+          #11151d
+        );
+    }
+
+
+    .location-card .image-area {
+      height: 210px;
+    }
+
+
+    .card-image {
+      width: 100%;
+      height: 100%;
+
+      display: block;
+
+      object-fit: cover;
+
+      transition: transform 0.35s;
+    }
+
+
+    .card:hover .card-image {
+      transform: scale(1.025);
+    }
+
+
+    .image-fallback {
+      position: absolute;
+      inset: 0;
+
+      display: none;
+      justify-content: center;
+      align-items: center;
+
+      padding: 20px;
+
+      text-align: center;
+
+      font-family: Georgia, serif;
+
+      font-size: 24px;
+
+      color: rgba(234, 216, 168, 0.45);
+
+      letter-spacing: 2px;
+    }
+
+
+    .card-content {
+      padding: 20px;
+    }
+
+
+    .card-category {
+      color: var(--gold);
+
+      font-size: 9px;
+
+      letter-spacing: 2px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 6px;
+    }
+
+
+    .card-title {
+      font-family: Georgia, serif;
+
+      font-size: 22px;
+
+      margin-bottom: 3px;
+    }
+
+
+    .card-english {
+      color: #777b85;
+
+      font-family: Georgia, serif;
+
+      font-size: 12px;
+
+      margin-bottom: 10px;
+    }
+
+
+    .card-role {
+      color: var(--text-soft);
+
+      font-size: 13px;
+
+      line-height: 1.5;
+    }
+
+
+    /* =========================================================
+       모달
+    ========================================================= */
 
     .modal {
       position: fixed;
 
       inset: 0;
 
-      background: rgba(0, 0, 0, 0.8);
+      z-index: 999;
 
       display: none;
-
       justify-content: center;
       align-items: center;
 
       padding: 30px;
 
-      z-index: 999;
+      background: rgba(0, 0, 0, 0.86);
+
+      backdrop-filter: blur(7px);
     }
+
 
     .modal.active {
       display: flex;
     }
 
-    .modal-content {
-      background: #141720;
 
-      width: min(820px, 100%);
+    .modal-content {
+      position: relative;
+
+      width: min(850px, 100%);
 
       max-height: 90vh;
 
       overflow-y: auto;
 
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-strong);
 
       border-radius: 14px;
 
-      position: relative;
+      background: #12161e;
+
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.6);
     }
+
+
+    .modal-image-wrap {
+      position: relative;
+
+      width: 100%;
+
+      max-height: 460px;
+
+      overflow: hidden;
+
+      background: #11151c;
+    }
+
 
     .modal-image {
       width: 100%;
-      max-height: 450px;
+
+      max-height: 460px;
+
+      display: block;
 
       object-fit: cover;
     }
 
-    .modal-text {
-      padding: 32px;
+
+    .modal-image-fallback {
+      display: none;
+
+      min-height: 250px;
+
+      justify-content: center;
+      align-items: center;
+
+      font-family: Georgia, serif;
+
+      font-size: 38px;
+
+      color: rgba(200, 169, 107, 0.4);
     }
+
+
+    .modal-body {
+      padding: 35px;
+    }
+
 
     .modal-category {
       color: var(--gold);
 
-      font-size: 11px;
+      font-size: 10px;
 
       letter-spacing: 3px;
+
+      text-transform: uppercase;
     }
+
 
     .modal-title {
+      margin-top: 5px;
+
       font-family: Georgia, serif;
 
-      font-size: 36px;
+      font-size: clamp(30px, 5vw, 42px);
 
-      margin: 5px 0 5px;
+      font-weight: 400;
     }
 
-    .modal-subtitle {
-      color: var(--text-soft);
 
-      margin-bottom: 25px;
+    .modal-english {
+      color: #757984;
+
+      font-family: Georgia, serif;
+
+      font-size: 14px;
+
+      margin-bottom: 10px;
     }
+
+
+    .modal-role {
+      padding-bottom: 22px;
+
+      border-bottom: 1px solid var(--border);
+
+      color: var(--gold-light);
+
+      font-size: 14px;
+    }
+
 
     .modal-description {
-      color: #ccc;
+      padding-top: 25px;
+
+      color: #c4c1ba;
 
       white-space: pre-line;
+
+      font-size: 14px;
     }
 
-    .close {
+
+    .modal-close {
       position: absolute;
 
       top: 15px;
-      right: 18px;
+      right: 15px;
 
-      width: 38px;
-      height: 38px;
+      z-index: 10;
+
+      width: 40px;
+      height: 40px;
+
+      border: 1px solid rgba(255, 255, 255, 0.25);
 
       border-radius: 50%;
 
-      border: 1px solid rgba(255,255,255,0.2);
-
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.65);
 
       color: white;
 
-      cursor: pointer;
+      font-size: 22px;
 
-      font-size: 21px;
+      cursor: pointer;
     }
 
 
-    /* =========================
-       푸터
-    ========================= */
+    /* =========================================================
+       검색 결과 없음
+    ========================================================= */
 
-    footer {
-      border-top: 1px solid var(--border);
+    .empty-message {
+      grid-column: 1 / -1;
 
-      padding: 45px 20px;
+      padding: 60px 20px;
 
       text-align: center;
 
       color: #777;
 
-      font-size: 12px;
+      border: 1px dashed var(--border);
+
+      border-radius: var(--radius);
     }
 
 
-    /* =========================
-       모바일
-    ========================= */
+    /* =========================================================
+       푸터
+    ========================================================= */
 
-    @media (max-width: 700px) {
+    footer {
+      padding: 55px 20px;
+
+      border-top: 1px solid var(--border);
+
+      text-align: center;
+
+      color: #65676d;
+
+      font-size: 11px;
+
+      letter-spacing: 2px;
+    }
+
+
+    /* =========================================================
+       모바일
+    ========================================================= */
+
+    @media (max-width: 720px) {
 
       header {
-        min-height: 330px;
+        min-height: 360px;
       }
+
+
+      .hero-small {
+        letter-spacing: 4px;
+      }
+
 
       .nav-inner {
         flex-direction: column;
@@ -562,41 +857,94 @@
         gap: 12px;
       }
 
+
       .nav-links {
-        gap: 15px;
+        gap: 16px;
       }
 
+
       main {
-        padding: 50px 16px;
+        width: min(100% - 28px, 1250px);
+
+        padding-top: 55px;
       }
+
+
+      section {
+        margin-bottom: 85px;
+      }
+
+
+      .world-intro {
+        padding: 28px;
+      }
+
 
       .card-grid {
         grid-template-columns:
-          repeat(2, 1fr);
+          repeat(2, minmax(0, 1fr));
 
         gap: 12px;
       }
 
-      .card-image {
-        height: 230px;
+
+      .image-area {
+        height: 235px;
       }
+
+
+      .location-card .image-area {
+        height: 150px;
+      }
+
 
       .card-content {
         padding: 14px;
       }
 
+
       .card-title {
         font-size: 17px;
       }
+
+
+      .card-role {
+        font-size: 11px;
+      }
+
 
       .modal {
         padding: 12px;
       }
 
-      .modal-title {
-        font-size: 28px;
+
+      .modal-body {
+        padding: 25px;
       }
+
     }
+
+
+    @media (max-width: 440px) {
+
+      .nav-links {
+        font-size: 12px;
+
+        gap: 11px;
+      }
+
+
+      .card-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+
+      .image-area {
+        height: 210px;
+      }
+
+    }
+
   </style>
 </head>
 
@@ -604,827 +952,1327 @@
 <body>
 
 
-<!-- =========================
-     헤더
-========================= -->
+  <!-- =========================================================
+       메인 헤더
+  ========================================================== -->
 
-<header id="home">
+  <header id="home">
 
-  <div class="hero">
+    <div class="hero">
 
-    <div class="hero-small">
-      Mythology · Fantasy · Worldbuilding
-    </div>
+      <div class="hero-small">
+        Mythology · Fantasy · Worldbuilding
+      </div>
 
-    <h1>
-      WORLD ARCHIVE
-    </h1>
+      <h1>
+        WORLD ARCHIVE
+      </h1>
 
-    <div class="hero-line"></div>
+      <div class="hero-line"></div>
 
-    <p>
-      신과 인간, 괴물과 운명이 기록된 세계관 아카이브
-    </p>
-
-  </div>
-
-</header>
-
-
-
-<!-- =========================
-     네비게이션
-========================= -->
-
-<nav>
-
-  <div class="nav-inner">
-
-    <div class="logo">
-      ARCHIVE
-    </div>
-
-    <div class="nav-links">
-
-      <a href="#world">
-        세계관
-      </a>
-
-      <a href="#characters">
-        등장인물
-      </a>
-
-      <a href="#locations">
-        지역
-      </a>
+      <p>
+        신과 인간, 괴물과 운명이 기록된 세계관 아카이브
+      </p>
 
     </div>
 
-  </div>
-
-</nav>
+  </header>
 
 
 
-<main>
+  <!-- =========================================================
+       네비게이션
+  ========================================================== -->
 
+  <nav>
 
-<!-- =========================
-     세계관 소개
-========================= -->
+    <div class="nav-inner">
 
-<section id="world">
+      <div class="logo">
+        ARCHIVE
+      </div>
 
-  <div class="section-header">
+      <div class="nav-links">
 
-    <div class="section-label">
-      World
+        <a href="#world">
+          세계관
+        </a>
+
+        <a href="#characters">
+          등장인물
+        </a>
+
+        <a href="#locations">
+          아홉 세계
+        </a>
+
+      </div>
+
     </div>
 
-    <h2 class="section-title">
-      세계관
-    </h2>
-
-  </div>
-
-
-  <div class="world-box">
-
-    <h3>
-      라그나로크의 변수
-    </h3>
-
-    <p>
-      오래전부터 신들에게 예언된 세계의 종말, 라그나로크.
-      <br><br>
-
-      오딘과 아스가르드의 신들은 정해진 미래를 알고 있음에도
-      운명에 맞서 싸울 준비를 계속한다.
-      <br><br>
-
-      그러나 어느 날, 예언 어디에도 기록되어 있지 않은
-      한 명의 존재가 나타나면서 정해져 있던 운명에
-      처음으로 균열이 생기기 시작한다.
-    </p>
-
-  </div>
-
-</section>
+  </nav>
 
 
 
-<!-- =========================
-     등장인물
-========================= -->
-
-<section id="characters">
-
-  <div class="section-header">
-
-    <div class="section-label">
-      Characters
-    </div>
-
-    <h2 class="section-title">
-      등장인물
-    </h2>
-
-    <p class="section-description">
-      신, 인간, 괴물 그리고 세계의 운명을 움직이는 존재들.
-    </p>
-
-  </div>
+  <main>
 
 
-  <div class="search-area">
+    <!-- =========================================================
+         세계관
+    ========================================================== -->
 
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="이름 또는 설정 검색..."
-    >
+    <section id="world">
 
-    <button
-      class="filter-btn active"
-      data-filter="all"
-    >
-      전체
-    </button>
+      <div class="section-header">
 
-    <button
-      class="filter-btn"
-      data-filter="god"
-    >
-      신
-    </button>
+        <div class="section-label">
+          World
+        </div>
 
-    <button
-      class="filter-btn"
-      data-filter="monster"
-    >
-      괴물
-    </button>
+        <h2 class="section-title">
+          세계관
+        </h2>
 
-    <button
-      class="filter-btn"
-      data-filter="human"
-    >
-      인간
-    </button>
+        <p class="section-description">
+          세계수 위그드라실과 그 가지와 뿌리에 존재하는 아홉 개의 세계.
+        </p>
 
-  </div>
+      </div>
 
+
+      <div class="world-intro">
+
+        <h3>
+          위그드라실 · Yggdrasil
+        </h3>
+
+        <p>
+          세계를 지탱하는 거대한 세계수.
+          그 가지와 뿌리를 따라 아홉 개의 세계가 존재한다.
+          신들의 영역과 인간들의 세계, 거인과 엘프,
+          죽은 자들의 세계까지 모든 영역이 위그드라실을 중심으로 연결되어 있다.
+        </p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         등장인물
+    ========================================================== -->
+
+    <section id="characters">
+
+      <div class="section-header">
+
+        <div class="section-label">
+          Characters
+        </div>
+
+        <h2 class="section-title">
+          등장인물
+        </h2>
+
+        <p class="section-description">
+          신과 인간, 거인과 괴물. 다가오는 운명과 세계의 종말에 얽힌 존재들.
+        </p>
+
+      </div>
+
+
+      <div class="controls">
+
+        <div class="search-box">
+
+          <input
+            type="text"
+            id="characterSearch"
+            placeholder="이름, 역할, 설정 검색..."
+          >
+
+        </div>
+
+
+        <div class="filters">
+
+          <button class="filter-btn active" data-filter="all">
+            전체
+          </button>
+
+          <button class="filter-btn" data-filter="aesir">
+            에시르
+          </button>
+
+          <button class="filter-btn" data-filter="vanir">
+            바니르
+          </button>
+
+          <button class="filter-btn" data-filter="othergod">
+            기타 신
+          </button>
+
+          <button class="filter-btn" data-filter="monster">
+            괴물
+          </button>
+
+          <button class="filter-btn" data-filter="giant">
+            거인
+          </button>
+
+          <button class="filter-btn" data-filter="human">
+            인간
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="card-grid"
+        id="characterGrid"
+      ></div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         아홉 세계
+    ========================================================== -->
+
+    <section id="locations">
+
+      <div class="section-header">
+
+        <div class="section-label">
+          Nine Realms
+        </div>
+
+        <h2 class="section-title">
+          아홉 세계
+        </h2>
+
+        <p class="section-description">
+          세계수 위그드라실을 중심으로 존재하는 주요 세계와 영역.
+        </p>
+
+      </div>
+
+
+      <div
+        class="card-grid"
+        id="locationGrid"
+      ></div>
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- =========================================================
+       상세 모달
+  ========================================================== -->
 
   <div
-    class="card-grid"
-    id="characterGrid"
-  ></div>
+    class="modal"
+    id="modal"
+  >
 
-</section>
+    <div class="modal-content">
 
-
-
-<!-- =========================
-     지역
-========================= -->
-
-<section id="locations">
-
-  <div class="section-header">
-
-    <div class="section-label">
-      Locations
-    </div>
-
-    <h2 class="section-title">
-      지역
-    </h2>
-
-    <p class="section-description">
-      아홉 세계와 그 안에 존재하는 주요 장소.
-    </p>
-
-  </div>
+      <button
+        class="modal-close"
+        id="modalClose"
+        aria-label="닫기"
+      >
+        ×
+      </button>
 
 
-  <div
-    class="card-grid"
-    id="locationGrid"
-  ></div>
+      <div class="modal-image-wrap">
 
-</section>
+        <img
+          class="modal-image"
+          id="modalImage"
+          alt=""
+        >
+
+        <div
+          class="modal-image-fallback"
+          id="modalImageFallback"
+        >
+          ARCHIVE
+        </div>
+
+      </div>
 
 
-</main>
+      <div class="modal-body">
 
+        <div
+          class="modal-category"
+          id="modalCategory"
+        ></div>
 
+        <h2
+          class="modal-title"
+          id="modalTitle"
+        ></h2>
 
-<!-- =========================
-     상세 모달
-========================= -->
+        <div
+          class="modal-english"
+          id="modalEnglish"
+        ></div>
 
-<div
-  class="modal"
-  id="modal"
->
+        <div
+          class="modal-role"
+          id="modalRole"
+        ></div>
 
-  <div class="modal-content">
+        <div
+          class="modal-description"
+          id="modalDescription"
+        ></div>
 
-    <button
-      class="close"
-      onclick="closeModal()"
-    >
-      ×
-    </button>
-
-    <img
-      class="modal-image"
-      id="modalImage"
-      src=""
-      alt=""
-    >
-
-    <div class="modal-text">
-
-      <div
-        class="modal-category"
-        id="modalCategory"
-      ></div>
-
-      <div
-        class="modal-title"
-        id="modalTitle"
-      ></div>
-
-      <div
-        class="modal-subtitle"
-        id="modalSubtitle"
-      ></div>
-
-      <div
-        class="modal-description"
-        id="modalDescription"
-      ></div>
+      </div>
 
     </div>
 
   </div>
 
-</div>
+
+
+  <!-- =========================================================
+       푸터
+  ========================================================== -->
+
+  <footer>
+
+    WORLD ARCHIVE
+    <br>
+    PERSONAL WORLDBUILDING DATABASE
+
+  </footer>
 
 
 
-<footer>
+  <script>
 
-  WORLD ARCHIVE
-  <br>
+    /* =========================================================
+       등장인물 데이터
+    ========================================================== */
 
-  Personal Worldbuilding Database
+    const characters = [
 
-</footer>
+      {
+        name: "오딘",
+        english: "Odin",
 
+        category: "aesir",
+        categoryName: "Æsir · God",
 
+        role: "아스가르드를 다스리는 최고신",
 
-<script>
+        image: "images/odin.jpg",
 
+        description:
+`에시르 신족의 최고신이자 아스가르드를 다스리는 존재.
 
-/* ==================================================
-   등장인물 데이터
+지식과 지혜, 전쟁과 죽음에 깊이 연관되어 있으며
+다가올 라그나로크와 자신의 죽음에 관한 예언을 알고 있다.
 
-   캐릭터를 추가하고 싶으면
-   아래 배열 안에 하나씩 추가하면 됨.
-================================================== */
-
-const characters = [
-
-  {
-    name: "오딘",
-
-    english: "Odin",
-
-    category: "god",
-
-    categoryName: "Æsir · God",
-
-    role: "아스가르드의 최고신",
-
-    image: "images/odin.jpg",
-
-    description:
-`아스가르드를 다스리는 최고신.
-
-다가올 라그나로크와 자신의 죽음을 알고 있으며,
-그 운명을 바꾸기 위해 오랫동안 지식과 힘을 모아왔다.
-
-냉정하고 계산적인 모습을 보이지만
-자신이 지켜야 할 세계와 신들에 대한 책임감이 강하다.
+그럼에도 정해진 운명을 순순히 받아들이지 않고,
+미래를 바꿀 방법을 찾기 위해 끊임없이 지식과 힘을 모은다.
 
 상징
 • 궁니르
 • 후긴과 무닌
 • 슬레이프니르`
-  },
+      },
 
 
-  {
-    name: "로키",
+      {
+        name: "토르",
+        english: "Thor",
 
-    english: "Loki",
+        category: "aesir",
+        categoryName: "Æsir · God",
 
-    category: "god",
+        role: "천둥과 힘을 상징하는 전쟁의 신",
 
-    categoryName: "God",
+        image: "images/thor.jpg",
 
-    role: "장난과 변칙의 신",
+        description:
+`아스가르드를 대표하는 강대한 전사이자 천둥의 신.
 
-    image: "images/loki.jpg",
+신들의 적과 거인들을 상대하는 최전선에 서며,
+강력한 신기 묠니르를 사용한다.
 
-    description:
-`신들 사이에서 끊임없이 문제를 일으키는 변칙적인 존재.
+호전적이고 직선적인 성향을 가지고 있지만
+자신이 지켜야 하는 존재에 대해서는 강한 책임감을 보인다.
 
-누구의 편인지 쉽게 판단할 수 없으며
-자신의 목적을 위해 거짓과 진실을 자유롭게 섞는다.
+라그나로크에서는 세계뱀 요르문간드와
+운명을 건 최후의 결전을 벌이게 된다.
 
-라그나로크와 깊은 관계를 가진 인물이다.`
-  },
+상징
+• 묠니르
+• 천둥
+• 번개`
+      },
 
 
-  {
-    name: "요르문간드",
+      {
+        name: "로키",
+        english: "Loki",
 
-    english: "Jörmungandr",
+        category: "othergod",
+        categoryName: "God · Trickster",
 
-    category: "monster",
+        role: "변칙과 속임수의 신",
 
-    categoryName: "Primordial Monster",
+        image: "images/loki.jpg",
 
-    role: "세계를 감싸는 거대한 뱀",
+        description:
+`신들 사이에서 수많은 사건과 혼란을 일으킨 변칙적인 존재.
 
-    image: "images/jormungandr.jpg",
+뛰어난 지략과 화술을 가지고 있으며,
+거짓과 진실을 자유롭게 섞어 자신의 목적을 이루려 한다.
 
-    description:
-`로키의 자식이자 미드가르드를 감싸고 있는 세계뱀.
+신들과 가까이 지내면서도 완전히 그들의 편에 속하지 않으며
+라그나로크의 발생과도 깊게 연결되어 있다.
 
-본래 모습은 대륙조차 압도하는 거대한 괴물이지만
-인간형에서는 의외로 소심하고 조용한 성격을 가지고 있다.
+요르문간드, 펜리르, 헬의 부모이기도 하다.`
+      },
 
-바다 깊은 곳에서 혼자 지내는 것을 좋아하며
-낯선 존재와 만나는 것을 상당히 부담스러워한다.`
-  },
 
+      {
+        name: "프레이",
+        english: "Freyr",
 
-  {
-    name: "펜리르",
+        category: "vanir",
+        categoryName: "Vanir · God",
 
-    english: "Fenrir",
+        role: "풍요와 생명, 평화를 상징하는 신",
 
-    category: "monster",
+        image: "images/freyr.jpg",
 
-    categoryName: "Divine Beast",
+        description:
+`바니르 신족을 대표하는 신 중 하나.
 
-    role: "신을 삼키는 늑대",
+풍요와 생명, 햇빛과 평화를 상징하며
+자연과 인간의 번영과 깊게 연결되어 있다.
 
-    image: "images/fenrir.jpg",
+에시르와 바니르 사이의 관계를 상징하는 존재이기도 하며,
+라그나로크가 시작되면 불의 거인왕 수르트와
+운명을 건 최후의 결전을 벌이게 된다.`
+      },
 
-    description:
-`라그나로크에서 오딘을 죽일 운명을 가진 거대한 늑대.
 
-신들은 펜리르의 힘을 두려워하여
-마법의 사슬 글레이프니르로 그녀를 구속했다.
+      {
+        name: "티르",
+        english: "Tyr",
 
-오랫동안 신들에 대한 분노를 품고 있다.`
-  },
+        category: "aesir",
+        categoryName: "Æsir · God",
 
+        role: "전쟁과 정의, 맹세를 상징하는 신",
 
-  {
-    name: "이방인",
+        image: "images/tyr.jpg",
 
-    english: "Unknown",
+        description:
+`용기와 정의, 전쟁과 맹세를 상징하는 신.
 
-    category: "human",
+거대한 늑대 펜리르를 글레이프니르로 구속하는 과정에서
+펜리르를 안심시키기 위해 자신의 손을 희생했다.
 
-    categoryName: "Human",
+그 사건 이후 한쪽 팔을 잃었지만
+전사로서의 의지와 명예는 흔들리지 않았다.
 
-    role: "예언에 존재하지 않는 인간",
+라그나로크에서도 마지막까지 신들의 전사로 싸운다.`
+      },
 
-    image: "images/protagonist.jpg",
 
-    description:
-`라그나로크의 예언 어디에도 기록되어 있지 않은 존재.
+      {
+        name: "헬",
+        english: "Hel",
 
-정해진 운명 밖에서 나타난 최초의 변수이며,
-그 존재 자체가 신들의 미래에 영향을 주기 시작한다.`
-  }
+        category: "othergod",
+        categoryName: "Goddess · Underworld",
 
-];
+        role: "죽은 자들의 세계를 다스리는 여신",
 
+        image: "images/hel.jpg",
 
+        description:
+`헬헤임을 다스리는 죽음의 여신.
 
-/* ==================================================
-   지역 데이터
-================================================== */
+로키의 자식 중 하나이며,
+전장에서 명예롭게 죽지 못한 수많은 영혼을 지배한다.
 
-const locations = [
+아스가르드의 신들과 일정한 거리를 유지하며
+산 자들의 정치에는 쉽게 개입하지 않는다.
 
-  {
-    name: "아스가르드",
+그러나 라그나로크가 가까워질수록
+죽은 자들의 세계 역시 거대한 운명의 흐름에 휘말리게 된다.`
+      },
 
-    english: "Asgard",
 
-    categoryName: "Realm of Gods",
+      {
+        name: "요르문간드",
+        english: "Jörmungandr",
 
-    role: "에시르 신족의 세계",
+        category: "monster",
+        categoryName: "Primordial Monster",
 
-    image: "images/asgard.jpg",
+        role: "세계를 감싸는 거대한 세계뱀",
 
-    description:
-`오딘과 에시르 신족이 거주하는 신들의 세계.
+        image: "images/jormungandr.jpg",
 
-비프로스트를 통해 미드가르드와 연결되어 있으며
-발할라를 비롯한 수많은 신들의 궁전이 존재한다.`
-  },
+        description:
+`로키의 자식이자 미드가르드를 둘러싸고 있는 세계뱀.
 
+진정한 모습은 세계를 감쌀 정도로 거대한 뱀이며
+심해 깊은 곳에서 오랜 시간을 보내고 있다.
 
-  {
-    name: "미드가르드",
+압도적인 힘을 가진 존재지만
+평소에는 외부와의 접촉을 꺼리는 성향을 보인다.
 
-    english: "Midgard",
+라그나로크에서는 오랜 숙적인 토르와
+서로의 목숨을 건 최후의 싸움을 벌이게 된다.`
+      },
 
-    categoryName: "Realm of Humans",
 
-    role: "인간의 세계",
+      {
+        name: "펜리르",
+        english: "Fenrir",
 
-    image: "images/midgard.jpg",
+        category: "monster",
+        categoryName: "Divine Beast",
 
-    description:
-`세계수 위그드라실에 존재하는 아홉 세계 중 하나.
+        role: "신을 삼킬 운명을 가진 거대한 늑대",
 
-인간들이 살아가는 세계이며
-요르문간드가 거대한 몸으로 세계를 둘러싸고 있다.`
-  },
+        image: "images/fenrir.jpg",
 
+        description:
+`로키의 자식이자 신들조차 두려워할 정도의 힘을 가진 거대한 늑대.
 
-  {
-    name: "헬헤임",
+신들은 펜리르가 언젠가 자신들에게 재앙을 가져올 것이라는
+예언을 두려워하여 마법의 사슬 글레이프니르로 구속했다.
 
-    english: "Helheim",
+그 과정에서 티르의 손을 물어뜯었으며,
+오랜 구속으로 인해 신들에 대한 깊은 분노를 품게 되었다.
 
-    categoryName: "Realm of the Dead",
+라그나로크에서는 결국 속박을 끊고
+최고신 오딘과 맞서게 된다.`
+      },
 
-    role: "죽은 자들의 세계",
 
-    image: "images/helheim.jpg",
+      {
+        name: "가름",
+        english: "Garmr",
 
-    description:
-`여신 헬이 다스리는 죽은 자들의 세계.
+        category: "monster",
+        categoryName: "Guardian Beast",
 
-전장에서 명예롭게 죽지 못한 이들의 영혼이
-이곳으로 향한다고 전해진다.`
-  },
+        role: "헬헤임을 지키는 거대한 마견",
 
+        image: "images/garm.jpg",
 
-  {
-    name: "세계수",
+        description:
+`죽은 자들의 세계 헬헤임을 지키는 거대한 마견.
 
-    english: "Yggdrasil",
+헬의 충견이자 명계의 수호자로서
+산 자와 죽은 자의 경계를 지키는 존재다.
 
-    categoryName: "World Tree",
+평소에는 헬의 명령을 충실히 따르지만
+라그나로크가 시작되면 속박에서 풀려나
+신들의 전쟁에 뛰어들게 된다.`
+      },
 
-    role: "아홉 세계를 연결하는 세계수",
 
-    image: "images/yggdrasil.jpg",
+      {
+        name: "수르트",
+        english: "Surtr",
 
-    description:
-`아홉 세계를 이어주는 거대한 세계수.
+        category: "giant",
+        categoryName: "Fire Giant",
 
-신과 인간, 거인과 죽은 자들의 세계가
-모두 위그드라실을 중심으로 연결되어 있다.`
-  }
+        role: "무스펠헤임을 지배하는 화염의 거인왕",
 
-];
+        image: "images/surtr.jpg",
 
+        description:
+`불과 화염의 세계 무스펠헤임의 정점에 존재하는 거인왕.
 
+태초부터 강대한 화염의 힘을 품고 있으며,
+라그나로크가 시작되면 불의 거인들을 이끌고
+신들의 세계를 향해 진군한다.
 
-/* ==================================================
-   카드 생성
-================================================== */
+거대한 화염의 검을 휘두르며
+최후에는 세계 자체를 불길로 뒤덮을 운명을 가진 존재다.
 
-const characterGrid =
-  document.getElementById("characterGrid");
+라그나로크에서는 프레이와 최후의 결전을 벌인다.`
+      },
 
-const locationGrid =
-  document.getElementById("locationGrid");
 
+      {
+        name: "이방인",
+        english: "The Stranger",
 
-function renderCharacters(
-  filter = "all",
-  search = ""
-) {
+        category: "human",
+        categoryName: "Human · Unknown",
 
-  characterGrid.innerHTML = "";
+        role: "예언에 존재하지 않는 수수께끼의 인간",
 
+        image: "images/stranger.jpg",
 
-  const filtered =
-    characters.filter(character => {
+        description:
+`어느 날 갑작스럽게 신들의 세계와 얽히게 된 인간.
 
-      const categoryMatch =
-        filter === "all" ||
-        character.category === filter;
+라그나로크에 관한 수많은 예언과 기록 어디에도
+그 존재가 등장하지 않는다.
 
+신들에게 있어서는 이해할 수 없는 존재이자,
+이미 정해져 있던 미래에 처음으로 나타난 변수다.
 
-      const searchMatch =
-        (
-          character.name +
-          character.english +
-          character.role +
-          character.description
-        )
-        .toLowerCase()
-        .includes(search.toLowerCase());
+그 선택에 따라 신들의 운명과
+라그나로크의 결말 자체가 달라질 가능성을 가지고 있다.`
+      }
 
+    ];
 
-      return categoryMatch && searchMatch;
 
-    });
 
+    /* =========================================================
+       지역 데이터
 
-  filtered.forEach(character => {
+       위그드라실 + 아홉 세계 전체
+    ========================================================== */
 
-    const card =
-      document.createElement("article");
+    const locations = [
 
+      {
+        name: "위그드라실",
+        english: "Yggdrasil",
 
-    card.className = "card";
+        categoryName: "World Tree",
 
+        role: "아홉 세계를 연결하고 지탱하는 세계수",
 
-    card.innerHTML = `
+        image: "images/yggdrasil.jpg",
 
-      <img
-        class="card-image"
-        src="${character.image}"
-        alt="${character.name}"
-      >
+        description:
+`세계를 지탱하는 거대한 세계수.
 
-      <div class="card-content">
+그 가지와 뿌리를 따라 아홉 개의 세계가 존재한다.
 
-        <div class="card-category">
-          ${character.categoryName}
-        </div>
+신과 인간, 거인과 엘프,
+죽은 자들의 세계까지 모든 영역이
+위그드라실을 중심으로 연결되어 있다.`
+      },
 
-        <div class="card-title">
-          ${character.name}
-        </div>
 
-        <div class="card-subtitle">
-          ${character.role}
-        </div>
+      {
+        name: "아스가르드",
+        english: "Asgard",
 
-      </div>
+        categoryName: "Realm of the Æsir",
 
-    `;
+        role: "에시르 신족의 세계",
 
+        image: "images/asgard.jpg",
 
-    card.onclick = () =>
-      openModal(character);
+        description:
+`에시르 신족의 세계.
 
+최고신 오딘을 중심으로 수많은 신들이 살아가는 신들의 왕국이며,
+황금으로 빛나는 거대한 궁전과 신전들이 존재한다.
 
-    characterGrid.appendChild(card);
+신들의 정치와 군사 활동의 중심지이기도 하다.`
+      },
 
-  });
 
-}
+      {
+        name: "미드가르드",
+        english: "Midgard",
 
+        categoryName: "Realm of Humans",
 
+        role: "인간들의 세계",
 
-function renderLocations() {
+        image: "images/midgard.jpg",
 
-  locationGrid.innerHTML = "";
+        description:
+`인간들의 세계.
 
+수많은 왕국과 부족이 존재하며
+신들을 숭배하는 인간들이 살아간다.
 
-  locations.forEach(location => {
+신들의 전쟁이 벌어질 경우
+가장 먼저 피해를 입을 가능성이 높은 세계다.`
+      },
 
-    const card =
-      document.createElement("article");
 
+      {
+        name: "요툰헤임",
+        english: "Jötunheim",
 
-    card.className =
-      "card location-card";
+        categoryName: "Realm of Giants",
 
+        role: "거인족 요툰의 세계",
 
-    card.innerHTML = `
+        image: "images/jotunheim.jpg",
 
-      <img
-        class="card-image"
-        src="${location.image}"
-        alt="${location.name}"
-      >
+        description:
+`거인족 요툰의 세계.
 
-      <div class="card-content">
+거대한 산맥과 황야가 펼쳐진 땅이며
+에시르 신족과 오랫동안 적대 관계를 이어왔다.
 
-        <div class="card-category">
-          ${location.categoryName}
-        </div>
+그러나 모든 거인이 신을 증오하는 것은 아니다.`
+      },
 
-        <div class="card-title">
-          ${location.name}
-        </div>
 
-        <div class="card-subtitle">
-          ${location.role}
-        </div>
+      {
+        name: "바나헤임",
+        english: "Vanaheim",
 
-      </div>
+        categoryName: "Realm of the Vanir",
 
-    `;
+        role: "바니르 신족의 세계",
 
+        image: "images/vanaheim.jpg",
 
-    card.onclick = () =>
-      openModal(location);
+        description:
+`바니르 신족의 세계.
 
+자연과 풍요, 생명을 상징하는 아름다운 땅.
 
-    locationGrid.appendChild(card);
+과거 에시르와 전쟁을 벌였지만
+현재는 불안정한 평화를 유지하고 있다.`
+      },
 
-  });
 
-}
+      {
+        name: "알프헤임",
+        english: "Alfheim",
 
+        categoryName: "Realm of Light Elves",
 
+        role: "빛의 엘프들이 살아가는 세계",
 
-/* ==================================================
-   모달
-================================================== */
+        image: "images/alfheim.jpg",
 
-const modal =
-  document.getElementById("modal");
+        description:
+`빛의 엘프들이 살아가는 세계.
 
+아홉 세계에서도 특히 아름답고
+신비로운 영역으로 알려져 있다.
 
-function openModal(data) {
+풍부한 자연과 신비로운 빛으로 가득한 세계다.`
+      },
 
-  document.getElementById(
-    "modalImage"
-  ).src = data.image;
 
+      {
+        name: "스바르트알프헤임",
+        english: "Svartalfheim",
 
-  document.getElementById(
-    "modalCategory"
-  ).textContent =
-    data.categoryName;
+        categoryName: "Underground Realm",
 
+        role: "드베르그와 어둠의 존재들이 살아가는 지하 세계",
 
-  document.getElementById(
-    "modalTitle"
-  ).textContent =
-    `${data.name} · ${data.english}`;
+        image: "images/svartalfheim.jpg",
 
+        description:
+`드베르그와 어둠의 존재들이 살아가는 지하 세계.
 
-  document.getElementById(
-    "modalSubtitle"
-  ).textContent =
-    data.role;
+뛰어난 기술과 솜씨를 가진 장인들이 많으며
+신들의 무기와 보물 상당수가
+이곳의 장인들에 의해 만들어졌다.`
+      },
 
 
-  document.getElementById(
-    "modalDescription"
-  ).textContent =
-    data.description;
+      {
+        name: "무스펠헤임",
+        english: "Muspelheim",
 
+        categoryName: "Realm of Fire",
 
-  modal.classList.add("active");
+        role: "불과 화염의 세계",
 
-  document.body.style.overflow =
-    "hidden";
+        image: "images/muspelheim.jpg",
 
-}
+        description:
+`불과 화염의 세계.
 
+끝없는 불길과 뜨거운 대지가 펼쳐져 있으며
+불의 거인들이 살아간다.
 
+그 정점에는
+화염의 거인왕 수르트가 존재한다.`
+      },
 
-function closeModal() {
 
-  modal.classList.remove("active");
+      {
+        name: "니플헤임",
+        english: "Niflheim",
 
-  document.body.style.overflow =
-    "";
+        categoryName: "Realm of Mist and Ice",
 
-}
+        role: "얼음과 안개가 지배하는 태초의 세계",
 
+        image: "images/niflheim.jpg",
 
-modal.addEventListener(
-  "click",
+        description:
+`얼음과 안개가 지배하는 태초의 세계.
 
-  event => {
+끝없이 펼쳐지는 혹한과 짙은 안개로 인해
+평범한 생명체가 살아가기 힘든 죽음의 땅이다.`
+      },
 
-    if(event.target === modal) {
 
-      closeModal();
+      {
+        name: "헬헤임",
+        english: "Helheim",
+
+        categoryName: "Realm of the Dead",
+
+        role: "죽은 자들의 세계",
+
+        image: "images/helheim.jpg",
+
+        description:
+`죽은 자들의 세계.
+
+전장에서 명예롭게 죽지 못한 영혼 상당수가 향하는 장소이며
+죽음의 여신 헬이 다스린다.
+
+산 자들에게는 쉽게 접근할 수 없는
+차갑고 고요한 명계의 영역이다.`
+      }
+
+    ];
+
+
+
+    /* =========================================================
+       DOM
+    ========================================================== */
+
+    const characterGrid =
+      document.getElementById("characterGrid");
+
+
+    const locationGrid =
+      document.getElementById("locationGrid");
+
+
+    const characterSearch =
+      document.getElementById("characterSearch");
+
+
+    const modal =
+      document.getElementById("modal");
+
+
+    const modalClose =
+      document.getElementById("modalClose");
+
+
+    const modalImage =
+      document.getElementById("modalImage");
+
+
+    const modalImageFallback =
+      document.getElementById("modalImageFallback");
+
+
+    let currentFilter = "all";
+
+
+
+    /* =========================================================
+       이미지 오류 처리
+    ========================================================== */
+
+    function imageError(img, fallback) {
+
+      img.style.display = "none";
+
+      fallback.style.display = "flex";
 
     }
 
-  }
-
-);
 
 
-document.addEventListener(
-  "keydown",
+    /* =========================================================
+       등장인물 카드
+    ========================================================== */
 
-  event => {
+    function renderCharacters() {
 
-    if(event.key === "Escape") {
-
-      closeModal();
-
-    }
-
-  }
-
-);
+      const searchText =
+        characterSearch.value
+          .trim()
+          .toLowerCase();
 
 
+      const filtered =
+        characters.filter(character => {
 
-/* ==================================================
-   검색
-================================================== */
-
-let currentFilter = "all";
-
-
-document
-  .getElementById("searchInput")
-  .addEventListener(
-    "input",
-
-    event => {
-
-      renderCharacters(
-        currentFilter,
-        event.target.value
-      );
-
-    }
-  );
+          const categoryMatch =
+            currentFilter === "all" ||
+            character.category === currentFilter;
 
 
-
-/* ==================================================
-   카테고리 필터
-================================================== */
-
-document
-  .querySelectorAll(".filter-btn")
-  .forEach(button => {
-
-    button.addEventListener(
-      "click",
-
-      () => {
-
-        document
-          .querySelectorAll(
-            ".filter-btn"
-          )
-          .forEach(btn =>
-            btn.classList.remove(
-              "active"
-            )
-          );
+          const combinedText =
+            `
+              ${character.name}
+              ${character.english}
+              ${character.categoryName}
+              ${character.role}
+              ${character.description}
+            `
+            .toLowerCase();
 
 
-        button.classList.add(
-          "active"
-        );
+          const searchMatch =
+            combinedText.includes(searchText);
 
 
-        currentFilter =
-          button.dataset.filter;
+          return categoryMatch && searchMatch;
+
+        });
 
 
-        renderCharacters(
-          currentFilter,
-          document.getElementById(
-            "searchInput"
-          ).value
-        );
+      characterGrid.innerHTML = "";
+
+
+      if (filtered.length === 0) {
+
+        characterGrid.innerHTML = `
+          <div class="empty-message">
+            검색 결과가 없습니다.
+          </div>
+        `;
+
+        return;
 
       }
 
+
+      filtered.forEach(character => {
+
+        const card =
+          document.createElement("article");
+
+
+        card.className = "card";
+
+
+        const imageArea =
+          document.createElement("div");
+
+
+        imageArea.className = "image-area";
+
+
+        const image =
+          document.createElement("img");
+
+
+        image.className = "card-image";
+
+        image.src = character.image;
+
+        image.alt = character.name;
+
+
+        const fallback =
+          document.createElement("div");
+
+
+        fallback.className =
+          "image-fallback";
+
+
+        fallback.textContent =
+          character.english;
+
+
+        image.onerror = () =>
+          imageError(image, fallback);
+
+
+        imageArea.appendChild(image);
+
+        imageArea.appendChild(fallback);
+
+
+        const content =
+          document.createElement("div");
+
+
+        content.className =
+          "card-content";
+
+
+        content.innerHTML = `
+
+          <div class="card-category">
+            ${character.categoryName}
+          </div>
+
+          <div class="card-title">
+            ${character.name}
+          </div>
+
+          <div class="card-english">
+            ${character.english}
+          </div>
+
+          <div class="card-role">
+            ${character.role}
+          </div>
+
+        `;
+
+
+        card.appendChild(imageArea);
+
+        card.appendChild(content);
+
+
+        card.addEventListener(
+          "click",
+          () => openModal(character)
+        );
+
+
+        characterGrid.appendChild(card);
+
+      });
+
+    }
+
+
+
+    /* =========================================================
+       지역 카드
+    ========================================================== */
+
+    function renderLocations() {
+
+      locationGrid.innerHTML = "";
+
+
+      locations.forEach(location => {
+
+        const card =
+          document.createElement("article");
+
+
+        card.className =
+          "card location-card";
+
+
+        const imageArea =
+          document.createElement("div");
+
+
+        imageArea.className =
+          "image-area";
+
+
+        const image =
+          document.createElement("img");
+
+
+        image.className =
+          "card-image";
+
+
+        image.src =
+          location.image;
+
+
+        image.alt =
+          location.name;
+
+
+        const fallback =
+          document.createElement("div");
+
+
+        fallback.className =
+          "image-fallback";
+
+
+        fallback.textContent =
+          location.english;
+
+
+        image.onerror = () =>
+          imageError(image, fallback);
+
+
+        imageArea.appendChild(image);
+
+        imageArea.appendChild(fallback);
+
+
+        const content =
+          document.createElement("div");
+
+
+        content.className =
+          "card-content";
+
+
+        content.innerHTML = `
+
+          <div class="card-category">
+            ${location.categoryName}
+          </div>
+
+          <div class="card-title">
+            ${location.name}
+          </div>
+
+          <div class="card-english">
+            ${location.english}
+          </div>
+
+          <div class="card-role">
+            ${location.role}
+          </div>
+
+        `;
+
+
+        card.appendChild(imageArea);
+
+        card.appendChild(content);
+
+
+        card.addEventListener(
+          "click",
+          () => openModal(location)
+        );
+
+
+        locationGrid.appendChild(card);
+
+      });
+
+    }
+
+
+
+    /* =========================================================
+       상세 모달
+    ========================================================== */
+
+    function openModal(data) {
+
+      document.getElementById(
+        "modalCategory"
+      ).textContent =
+        data.categoryName;
+
+
+      document.getElementById(
+        "modalTitle"
+      ).textContent =
+        data.name;
+
+
+      document.getElementById(
+        "modalEnglish"
+      ).textContent =
+        data.english;
+
+
+      document.getElementById(
+        "modalRole"
+      ).textContent =
+        data.role;
+
+
+      document.getElementById(
+        "modalDescription"
+      ).textContent =
+        data.description;
+
+
+      modalImage.style.display =
+        "block";
+
+
+      modalImageFallback.style.display =
+        "none";
+
+
+      modalImageFallback.textContent =
+        data.english;
+
+
+      modalImage.src =
+        data.image;
+
+
+      modalImage.alt =
+        data.name;
+
+
+      modalImage.onerror = () => {
+
+        modalImage.style.display =
+          "none";
+
+
+        modalImageFallback.style.display =
+          "flex";
+
+      };
+
+
+      modal.classList.add(
+        "active"
+      );
+
+
+      document.body.classList.add(
+        "modal-open"
+      );
+
+    }
+
+
+
+    function closeModal() {
+
+      modal.classList.remove(
+        "active"
+      );
+
+
+      document.body.classList.remove(
+        "modal-open"
+      );
+
+    }
+
+
+
+    modalClose.addEventListener(
+      "click",
+      closeModal
     );
 
-  });
+
+
+    modal.addEventListener(
+      "click",
+      event => {
+
+        if (event.target === modal) {
+
+          closeModal();
+
+        }
+
+      }
+    );
 
 
 
-/* ==================================================
-   최초 실행
-================================================== */
+    document.addEventListener(
+      "keydown",
+      event => {
 
-renderCharacters();
+        if (
+          event.key === "Escape" &&
+          modal.classList.contains("active")
+        ) {
 
-renderLocations();
+          closeModal();
+
+        }
+
+      }
+    );
 
 
-</script>
+
+    /* =========================================================
+       검색
+    ========================================================== */
+
+    characterSearch.addEventListener(
+      "input",
+      renderCharacters
+    );
+
+
+
+    /* =========================================================
+       필터
+    ========================================================== */
+
+    document
+      .querySelectorAll(".filter-btn")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            document
+              .querySelectorAll(".filter-btn")
+              .forEach(btn => {
+
+                btn.classList.remove(
+                  "active"
+                );
+
+              });
+
+
+            button.classList.add(
+              "active"
+            );
+
+
+            currentFilter =
+              button.dataset.filter;
+
+
+            renderCharacters();
+
+          }
+        );
+
+      });
+
+
+
+    /* =========================================================
+       최초 실행
+    ========================================================== */
+
+    renderCharacters();
+
+    renderLocations();
+
+  </script>
 
 
 </body>
-</html>
 
+</html>
